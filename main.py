@@ -79,3 +79,19 @@ signals3 = generateSignals(candles, 3)
 print ("signals (period 10):", signals10)
 print ("signals (period 5):", signals5)
 print ("signals (period 3):", signals3)
+
+# Counts how many signals were BUY, SELL or HOLD.
+
+def countSignals(signals):
+
+    buyCount = len([s for s in signals if s["signal"] == "BUY"])
+    sellCount = len([s for s in signals if s["signal"] == "SELL"])
+    holdCount = len([s for s in signals if s["signal"] == "HOLD"])
+
+    return {"BUY": buyCount, "SELL": sellCount, "HOLD": holdCount}
+
+print(countSignals(signals10))
+print(countSignals(signals5))
+print(countSignals(signals3))
+
+
