@@ -94,6 +94,7 @@ print(countSignals(signals10))
 print(countSignals(signals5))
 print(countSignals(signals3))
 
+# Excludes HOLD signals. Not a measure of profitability — see calculateWinRate for that.
 def calculateBuyRatio(signals):
     counts = countSignals(signals)
     totalSignals = counts["BUY"] + counts["SELL"]
@@ -106,5 +107,23 @@ def calculateBuyRatio(signals):
 print(calculateBuyRatio(signals10))
 print(calculateBuyRatio(signals5))
 print(calculateBuyRatio(signals3))
+
+# Determines whether a single trade, entered at a given price, hits its
+# win target, its stop-loss, or neither — resulting in WIN, LOSS, or UNRESOLVED.
+def checkOutcome(candles, entryBar, entryPrice, winPercent, lossPercent):
+    targetPrice = entryPrice * (1 + winPercent / 100)
+    stopPrice = entryPrice * ( 1 - lossPercent / 100)
+
+    for i in range(entryBar + 1, len(candles)):
+        if candles[i]["high"] >= targetPrice:
+            return "WIN"
+        
+        if candles[i]["low"]<= stopPrice:
+            return "LOSS"
+
+    return "UNRESOLVED"
+
+print(checkOutcome(candles, 8, 170, 5, 2))
+
 
 
