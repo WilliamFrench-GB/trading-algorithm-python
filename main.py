@@ -25,3 +25,17 @@ def calculateAverageClose(candles):
     return total / len(candles)
 
 print(calculateAverageClose(candles))
+
+# Compares only the LAST candle's close to the overall average — a single
+# snapshot, not a bar-by-bar trend. A candle can be individually bearish
+
+def detectTrend(candles):
+    average = calculateAverageClose(candles)
+    latestCandle =candles[len(candles)-1]
+
+    if latestCandle["close"] > average:
+        return "Bullish"
+    else:
+        return "Bearish"
+
+print(detectTrend(candles))
