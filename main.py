@@ -24,7 +24,7 @@ def calculateAverageClose(candles):
 
     return total / len(candles)
 
-print(calculateAverageClose(candles))
+print("Average close:", calculateAverageClose(candles))
 
 # Compares only the LAST candle's close to the overall average — a single
 # snapshot, not a bar-by-bar trend. A candle can be individually bearish
@@ -38,4 +38,44 @@ def detectTrend(candles):
     else:
         return "Bearish"
 
-print(detectTrend(candles))
+print("Overall trend:", detectTrend(candles))
+
+def generateSignals(candles, period):
+    signals = []
+
+    for i in range(period, len(candles)):
+        window = candles[i - period : i]
+        average = calculateAverageClose(window)
+        currentPrice = candles[i]["close"]
+
+        if currentPrice > average:
+            signals.append({
+                "bar": i,
+                "signal": "BUY", 
+                "currentPrice": currentPrice, 
+                "average": average
+                })
+        elif currentPrice < average:
+            signals.append({
+                "bar": i, 
+                "signal": "SELL", 
+                "currentPrice": currentPrice, 
+                "average": average
+                })
+        else:
+            signals.append({
+                "bar": i,
+                "signal": "HOLD",
+                "currentPrice": currentPrice,
+                "average": average
+            })
+
+    return signals
+
+signals10 = generateSignals(candles, 10)
+signals5 = generateSignals(candles, 5)
+signals3 = generateSignals(candles, 3)
+
+print ("signals (period 10):", signals10)
+print ("signals (period 5):", signals5)
+print ("signals (period 3):", signals3)
