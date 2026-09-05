@@ -12,4 +12,8 @@ Just started. See the original JavaScript version here:
 
 ## Running it
 
+<<<<<<< HEAD
     python main.py
+=======
+    python main.py
+>>>>>>> 721c489afd4e94fab36ffdc1d68d96e9eb98c205
