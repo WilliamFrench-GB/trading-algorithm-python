@@ -125,5 +125,15 @@ def checkOutcome(candles, entryBar, entryPrice, winPercent, lossPercent):
 
 print(checkOutcome(candles, 8, 170, 5, 2))
 
+# A function returning a "plausible" result on bad input is more dangerous
+# than a crash. Crashes get noticed. Silent wrong answers get shipped.
+
+def backtest(candles, signals, winPercent, lossPercent):
+    outcomes = [checkOutcome(candles, s["bar"], s["currentPrice"],winPercent, lossPercent)
+                 for s in signals if s["signal"] == "BUY"]
+
+    return outcomes
+
+print(backtest(candles, signals5, 5, 2))
 
 
