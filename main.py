@@ -127,7 +127,6 @@ print(checkOutcome(candles, 8, 170, 5, 2))
 
 # A function returning a "plausible" result on bad input is more dangerous
 # than a crash. Crashes get noticed. Silent wrong answers get shipped.
-
 def backtest(candles, signals, winPercent, lossPercent):
     outcomes = [checkOutcome(candles, s["bar"], s["currentPrice"],winPercent, lossPercent)
                  for s in signals if s["signal"] == "BUY"]
@@ -136,6 +135,8 @@ def backtest(candles, signals, winPercent, lossPercent):
 
 print(backtest(candles, signals5, 5, 2))
 
+# Excludes UNRESOLVED trades from the denominator — an unresolved trade
+# is neither a win nor a loss, so it shouldn't count against the rate.
 def calculateWinRate(outcomes):
     winCount = len([o for o in outcomes if o == "WIN"])
     unresolvedCount = len([ o for o in outcomes if o == "UNRESOLVED"])
@@ -149,3 +150,32 @@ def calculateWinRate(outcomes):
 print(calculateWinRate(backtest(candles, signals5, 5, 2)))
 
 
+# NOTE: This summary currently shows raw win/loss/unresolved counts using
+# .count(). It doesn't yet call calculateBuyRatio — planned as part of a
+# more complete comparison view later.
+
+outcomes10 = backtest(candles, signals10, 5, 2)
+outcomes5 = backtest(candles, signals5, 5, 2)
+outcomes3 = backtest(candles, signals3, 5, 2)
+
+print({"Period 10": {
+    "signals": len(signals10),
+    "Wins": outcomes10.count("WIN"),
+    "Losses": outcomes10.count("LOSS"),
+    "Unresolved": outcomes10.count("UNRESOLVED"),
+    }
+})
+print({"Period 5": {
+    "signals": len(signals5),
+    "Wins": outcomes5.count("WIN"),
+    "Losses": outcomes5.count("LOSS"),
+    "Unresolved": outcomes5.count("UNRESOLVED"),
+    }
+})
+print({"Period 3": {
+    "signals": len(signals3),
+    "Wins": outcomes3.count("WIN"),
+    "Losses": outcomes3.count("LOSS"),
+    "Unresolved": outcomes3.count("UNRESOLVED"),
+    }
+})
