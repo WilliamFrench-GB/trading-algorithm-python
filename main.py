@@ -94,4 +94,17 @@ print(countSignals(signals10))
 print(countSignals(signals5))
 print(countSignals(signals3))
 
+def calculateBuyRatio(signals):
+    counts = countSignals(signals)
+    totalSignals = counts["BUY"] + counts["SELL"]
+
+    if totalSignals == 0:
+        return 0
+
+    return counts["BUY"] / totalSignals * 100
+
+print(calculateBuyRatio(signals10))
+print(calculateBuyRatio(signals5))
+print(calculateBuyRatio(signals3))
+
 
