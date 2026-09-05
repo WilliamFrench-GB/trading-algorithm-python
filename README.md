@@ -1,15 +1,15 @@
-# Trading Algorithm (Python)
-
-Python rebuild of my JavaScript trading algorithm backtesting project.
-Same core premise — moving average signals, percentage-based backtesting,
-win rate across timeframes — rebuilt using proper Python tooling
-(pandas/numpy) and extended with real historical data.
-
 ## Status
 
-Just started. See the original JavaScript version here:
-[trading-algorithm](https://github.com/WilliamFrench-GB/trading-algorithm)
+JavaScript version fully ported to Python. Every function
+(calculateAverageClose, detectTrend, generateSignals, countSignals,
+calculateBuyRatio, checkOutcome, backtest, calculateWinRate) verified
+against the original JS output to confirm the port is correct.
 
-## Running it
+Known limitations (carried over from the JS version):
+- 12-candle dataset demonstrates mechanics, not statistically meaningful
+- checkOutcome assumes WIN is checked before LOSS within a candle
+- Final summary currently shows raw win/loss/unresolved counts,
+  not yet using calculateBuyRatio — planned improvement
 
-    python main.py
+Next: heading into LeetCode practice for algorithmic fundamentals,
+then back to extend this with real historical data and pandas/numpy.
