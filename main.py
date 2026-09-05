@@ -136,4 +136,16 @@ def backtest(candles, signals, winPercent, lossPercent):
 
 print(backtest(candles, signals5, 5, 2))
 
+def calculateWinRate(outcomes):
+    winCount = len([o for o in outcomes if o == "WIN"])
+    unresolvedCount = len([ o for o in outcomes if o == "UNRESOLVED"])
+    totalDecided = len(outcomes) - unresolvedCount
+
+    if totalDecided == 0:
+        return 0
+
+    return winCount / totalDecided * 100
+
+print(calculateWinRate(backtest(candles, signals5, 5, 2)))
+
 
